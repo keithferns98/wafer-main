@@ -4,13 +4,22 @@ import yaml
 import logging
 
 
+def read_params(config_path):
+    with open(config_path) as f:
+        config=yaml.safe_load(f)
 
+    return config
+
+def main(config_path,data_source):
+    config=read_params(config_path)
+    print(config)
 
 
 if __name__=="__main__":
     args= argparse.ArgumentParser()
-    args.add_argument("--config",default='default')
+    default_configpath=os.path.join('config','parameters.yaml')
+    args.add_argument("--config",default=default_configpath)
     args.add_argument('--datasource',default=None)
 
     parsed_args=args.parse_args()
-    print(parsed_args.config,parsed_args.datasource)
+    main(config_path=parsed_args.config,data_source=parsed_args.datasource)
